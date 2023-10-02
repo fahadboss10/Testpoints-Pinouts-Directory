@@ -7,6 +7,7 @@
     <title>Testpoints / Pinouts Directory</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lato:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async=""></script>
 
     <style>
         body {
@@ -358,9 +359,11 @@ Promise.all(fetchPromises)
                 cell1.textContent = item.Model;
                 
                 const imgElement = document.createElement('img');
-                imgElement.src = item.Image;
+                imgElement.setAttribute('data-src', item.Image);
+                imgElement.className = 'lazyload';  // Important for lazysizes to work
                 imgElement.onclick = function() { showLightbox(item.Image) };
                 cell2.appendChild(imgElement);
+
                 
                 cell3.textContent = item.Source; // Set the content of the new cell to Source data
             });
