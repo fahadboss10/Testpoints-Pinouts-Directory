@@ -457,7 +457,7 @@
         // Apply filter based on the URL parameter
         const brandParam = new URLSearchParams(window.location.search).get('brand');
         if (brandParam) {
-            const brand = Object.keys(BRAND_TO_ID).find(key => BRAND_TO_ID[key] == brandParam);
+            const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
             filterByBrand(brand);
         }
     });
