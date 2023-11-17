@@ -456,7 +456,7 @@
         const brandParam = new URLSearchParams(window.location.search).get('brand');
         if (brandParam) {
             const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
-            filterByBrand(brand);
+            setTimeout(() => filterByBrand(brand), 500); // Add a slight delay
         }
     });
 
