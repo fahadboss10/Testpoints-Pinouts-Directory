@@ -315,14 +315,12 @@
         let visibleRowCount = 0;
 
         for (let i = 0; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (brand === "" || trs[i].getAttribute("data-brand-id") == tableID) {
-                    trs[i].style.display = "";
-                    visibleRowCount++;
-                } else {
-                    trs[i].style.display = "none";
-                }
+            const brandId = trs[i].getAttribute("data-brand-id");
+            if (brand === "" || brandId == tableID) {
+                trs[i].style.display = "";
+                visibleRowCount++;
+            } else {
+                trs[i].style.display = "none";
             }
         }
 
