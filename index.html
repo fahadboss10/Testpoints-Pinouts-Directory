@@ -287,180 +287,183 @@
 
 <script>
     const API_BASE_URL = 'https://api.baserow.io/api/database/rows/table/';
-const TABLE_IDS = [135384, 135385, 135386, 135387, 145432];
-const API_TOKEN = 'R0hoE2thbSi4PWpxOUPHDFrdCmMKmU4A';
-let currentScale = 1;
+    const TABLE_IDS = [135384, 135385, 135386, 135387, 145432];
+    const API_TOKEN = 'R0hoE2thbSi4PWpxOUPHDFrdCmMKmU4A';
+    let currentScale = 1;
 
-const BRAND_TO_ID = {
-    'Nokia': 135384,
-    'Huawei': 135385,
-    'Oppo': 135386,
-    'Vivo': 135387,
-    'Samsung': 145432
-};
+    const BRAND_TO_ID = {
+        'Nokia': 135384,
+        'Huawei': 135385,
+        'Oppo': 135386,
+        'Vivo': 135387,
+        'Samsung': 145432
+    };
 
-function filterByBrand(brand) {
-    const tableID = BRAND_TO_ID[brand];
-    const tbody = document.getElementById("table-data");
-    const trs = tbody.getElementsByTagName("tr");
-    const chips = document.querySelectorAll('.brand-chip');
+    function filterByBrand(brand) {
+        const tableID = BRAND_TO_ID[brand];
+        const tbody = document.getElementById("table-data");
+        const trs = tbody.getElementsByTagName("tr");
+        const chips = document.querySelectorAll('.brand-chip');
 
-    chips.forEach(chip => chip.classList.remove('active'));
-    if (brand) {
-        document.querySelector(`.brand-chip[onclick="filterByBrand('${brand}')"]`).classList.add('active');
-    } else {
-        document.querySelector(`.brand-chip[onclick="filterByBrand('')"]`).classList.add('active');
-    }
+        chips.forEach(chip => chip.classList.remove('active'));
+        if (brand) {
+            document.querySelector(`.brand-chip[onclick="filterByBrand('${brand}')"]`).classList.add('active');
+        } else {
+            document.querySelector(`.brand-chip[onclick="filterByBrand('')"]`).classList.add('active');
+        }
 
-    let visibleRowCount = 0;
+        let visibleRowCount = 0;
 
-    for (let i = 0; i < trs.length; i++) {
-        const td = trs[i].getElementsByTagName("td")[0];
-        if (td) {
-            if (brand === "" || trs[i].getAttribute("data-brand-id") == tableID) {
-                trs[i].style.display = "";
-                visibleRowCount++;
-            } else {
-                trs[i].style.display = "none";
+        for (let i = 0; i < trs.length; i++) {
+            const td = trs[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (brand === "" || trs[i].getAttribute("data-brand-id") == tableID) {
+                    trs[i].style.display = "";
+                    visibleRowCount++;
+                } else {
+                    trs[i].style.display = "none";
+                }
             }
         }
+
+        document.getElementById('total-models').textContent = `Total Models: ${visibleRowCount}`;
     }
 
-    document.getElementById('total-models').textContent = `Total Models: ${visibleRowCount}`;
-}
-
-
-const fetchPromises = TABLE_IDS.map(tableID => {
-    return fetch(`${API_BASE_URL}${tableID}/?user_field_names=true`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Token ${API_TOKEN}`,
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => data.results);
-});
-
-Promise.all(fetchPromises)
-    .then(allData => {
-        const tbody = document.getElementById('table-data');
-        let totalModels = 0;
-
-        allData.forEach((data, tableIndex) => {
-            data.forEach(item => {
-                const row = tbody.insertRow();
-                row.setAttribute("data-brand-id", TABLE_IDS[tableIndex]);
-
-                const cell1 = row.insertCell(0);
-                const cell2 = row.insertCell(1);
-                const cell3 = row.insertCell(2); // New cell for Source
-
-                cell1.textContent = item.Model;
-                
-                const imgElement = document.createElement('img');
-                imgElement.setAttribute('data-src', item.Image);
-                imgElement.className = 'lazyload';  // Important for lazysizes to work
-                imgElement.onclick = function() { showLightbox(item.Image) };
-                cell2.appendChild(imgElement);
-
-                
-                cell3.textContent = item.Source; // Set the content of the new cell to Source data
-            });
-            totalModels += data.length;
-        });
-
-        document.getElementById('total-models').textContent = `Total Models: ${totalModels}`;
-        document.getElementById('loading').style.display = 'none';
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-        document.getElementById('loading').style.display = 'none';
+    const fetchPromises = TABLE_IDS.map(tableID => {
+        return fetch(`${API_BASE_URL}${tableID}/?user_field_names=true`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${API_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => data.results);
     });
 
+    Promise.all(fetchPromises)
+        .then(allData => {
+            const tbody = document.getElementById('table-data');
+            let totalModels = 0;
 
+            allData.forEach((data, tableIndex) => {
+                data.forEach(item => {
+                    const row = tbody.insertRow();
+                    row.setAttribute("data-brand-id", TABLE_IDS[tableIndex]);
 
-function showLightbox(src) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = src;
-    lightbox.classList.add('visible');
-}
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    const cell3 = row.insertCell(2); // New cell for Source
 
-function hideLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightbox.classList.remove('visible');
-    currentScale = 1;
-    lightboxImg.style.transform = `scale(${currentScale})`;
-}
+                    cell1.textContent = item.Model;
 
-function zoomImage(scaleFactor) {
-    currentScale *= scaleFactor;
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.style.transform = `scale(${currentScale})`;
-}
+                    const imgElement = document.createElement('img');
+                    imgElement.src = item.Image;
+                    imgElement.onclick = function () {
+                        showLightbox(item.Image)
+                    };
+                    cell2.appendChild(imgElement);
 
-const lightboxImage = document.getElementById('lightbox-img');
-lightboxImage.addEventListener('wheel', function(event) {
-    if (event.deltaY < 0) {
-        zoomImage(1.1);
-    } else {
-        zoomImage(0.9);
+                    cell3.textContent = item.Source; // Set the content of the new cell to Source data
+                });
+                totalModels += data.length;
+            });
+
+            document.getElementById('total-models').textContent = `Total Models: ${totalModels}`;
+            document.getElementById('loading').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('loading').style.display = 'none';
+        });
+
+    function showLightbox(src) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = src;
+        lightbox.classList.add('visible');
     }
-    event.preventDefault();
-}, { passive: false });
 
-function filterTable() {
-    const input = document.getElementById("search-input");
-    const filter = input.value.toLowerCase();
-    const tbody = document.getElementById("table-data");
-    const trs = tbody.getElementsByTagName("tr");
+    function hideLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightbox.classList.remove('visible');
+        currentScale = 1;
+        lightboxImg.style.transform = `scale(${currentScale})`;
+    }
 
-    for (let i = 0; i < trs.length; i++) {
-        const td = trs[i].getElementsByTagName("td")[0];
-        if (td) {
-            const txtValue = td.textContent || td.innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                trs[i].style.display = "";
-            } else {
-                trs[i].style.display = "none";
+    function zoomImage(scaleFactor) {
+        currentScale *= scaleFactor;
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.style.transform = `scale(${currentScale})`;
+    }
+
+    const lightboxImage = document.getElementById('lightbox-img');
+    lightboxImage.addEventListener('wheel', function (event) {
+        if (event.deltaY < 0) {
+            zoomImage(1.1);
+        } else {
+            zoomImage(0.9);
+        }
+        event.preventDefault();
+    }, {passive: false});
+
+    function filterTable() {
+        const input = document.getElementById("search-input");
+        const filter = input.value.toLowerCase();
+        const tbody = document.getElementById("table-data");
+        const trs = tbody.getElementsByTagName("tr");
+
+        for (let i = 0; i < trs.length; i++) {
+            const td = trs[i].getElementsByTagName("td")[0];
+            if (td) {
+                const txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    trs[i].style.display = "";
+                } else {
+                    trs[i].style.display = "none";
+                }
             }
         }
     }
-}
 
-function toggleNightMode() {
-    const bodyElement = document.body;
-    const toggleButton = document.getElementById('night-mode-toggle');
+    function toggleNightMode() {
+        const bodyElement = document.body;
+        const toggleButton = document.getElementById('night-mode-toggle');
 
-    if (bodyElement.classList.contains('night-mode')) {
-        bodyElement.classList.remove('night-mode');
-        toggleButton.innerHTML = '🌙';
-    } else {
-        bodyElement.classList.add('night-mode');
-        toggleButton.innerHTML = '🌞';
+        if (bodyElement.classList.contains('night-mode')) {
+            bodyElement.classList.remove('night-mode');
+            toggleButton.innerHTML = '🌙';
+        } else {
+            bodyElement.classList.add('night-mode');
+            toggleButton.innerHTML = '🌞';
+        }
     }
-}
 
-function setThemeBasedOnSystemPreference() {
-    const bodyElement = document.body;
-    const toggleButton = document.getElementById('night-mode-toggle');
+    function setThemeBasedOnSystemPreference() {
+        const bodyElement = document.body;
+        const toggleButton = document.getElementById('night-mode-toggle');
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // The user prefers dark theme
-        bodyElement.classList.add('night-mode');
-        toggleButton.innerHTML = '🌞';
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // The user prefers dark theme
+            bodyElement.classList.add('night-mode');
+            toggleButton.innerHTML = '🌞';
+        }
     }
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    setThemeBasedOnSystemPreference();
-});
+    document.addEventListener('DOMContentLoaded', function () {
+        setThemeBasedOnSystemPreference();
 
-
+        // Apply filter based on the URL parameter
+        const brandParam = new URLSearchParams(window.location.search).get('brand');
+        if (brandParam) {
+            const brand = Object.keys(BRAND_TO_ID).find(key => BRAND_TO_ID[key] == brandParam);
+            filterByBrand(brand);
+        }
+    });
 
 </script>
+
 
 </body>
 </html>
