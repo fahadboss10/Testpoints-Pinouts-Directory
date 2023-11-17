@@ -449,14 +449,14 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('load', function () {
         setThemeBasedOnSystemPreference();
 
         // Apply filter based on the URL parameter
         const brandParam = new URLSearchParams(window.location.search).get('brand');
         if (brandParam) {
             const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
-            setTimeout(() => filterByBrand(brand), 500); // Add a slight delay
+            filterByBrand(brand);
         }
     });
 
