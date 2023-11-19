@@ -449,18 +449,16 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    window.onload = function () {
         setThemeBasedOnSystemPreference();
 
-        // Apply filter based on the URL parameter after a short delay
-        setTimeout(() => {
-            const brandParam = new URLSearchParams(window.location.search).get('brand');
-            if (brandParam) {
-                const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
-                filterByBrand(brand);
-            }
-        }, 1000); // Adjust the delay as needed
-    });
+        // Apply filter based on the URL parameter
+        const brandParam = new URLSearchParams(window.location.search).get('brand');
+        if (brandParam) {
+            const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
+            filterByBrand(brand);
+        }
+    };
 
 </script>
 
