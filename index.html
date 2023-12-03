@@ -247,6 +247,7 @@
     <button class="brand-chip" onclick="filterByBrand('Oppo')">Oppo</button>
     <button class="brand-chip" onclick="filterByBrand('Vivo')">Vivo</button>
     <button class="brand-chip" onclick="filterByBrand('Samsung')">Samsung</button>
+    <button class="brand-chip" onclick="filterByBrand('Others')">Others</button>
 </div>
 
 <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
@@ -287,7 +288,7 @@
 
 <script>
     const API_BASE_URL = 'https://api.baserow.io/api/database/rows/table/';
-    const TABLE_IDS = [135384, 135385, 135386, 135387, 145432];
+    const TABLE_IDS = [135384, 135385, 135386, 135387, 145432, 226286];
     const API_TOKEN = 'R0hoE2thbSi4PWpxOUPHDFrdCmMKmU4A';
     let currentScale = 1;
 
@@ -296,7 +297,8 @@
         'Huawei': 135385,
         'Oppo': 135386,
         'Vivo': 135387,
-        'Samsung': 145432
+        'Samsung': 145432,
+        'Others': 226286
     };
 
     function filterByBrand(brand) {
