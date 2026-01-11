@@ -5,99 +5,331 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testpoints / Pinouts Directory</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lato:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async=""></script>
 
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
         }
 
-        table, th, td, .brand-chip, #search-input, #night-mode-toggle {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
 
-@media (max-width: 768px) {
-    td:nth-child(3), th:nth-child(3) {
-        display: none;
-    }
-}
+        body.night-mode {
+            background: #0f172a;
+        }
 
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        body.night-mode .header h1 {
+            color: #f1f5f9;
+        }
+
+        .stats {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px 28px;
+            border-radius: 12px;
+            color: #475569;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        body.night-mode .stats {
+            background: #1e293b;
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        .stats i {
+            font-size: 1.2rem;
+        }
+
+        /* Controls Container */
+        .controls {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        body.night-mode .controls {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 1.1rem;
+        }
 
         #search-input {
             width: 100%;
-            padding: 12px 20px;
-            margin: 20px 0;
-            box-sizing: border-box;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 14px 20px 14px 50px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+        }
+
+        body.night-mode #search-input {
+            background: #0f172a;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        body.night-mode #search-input:focus {
+            background: #1e293b;
+            border-color: #0ea5e9;
+        }
+
+        /* Brand Filter Chips */
+        .filter-label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.night-mode .filter-label {
+            color: #cbd5e1;
+        }
+
+        .brand-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand-chip {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        body.night-mode .brand-chip {
+            background: #0f172a;
+            color: #cbd5e1;
+            border-color: #334155;
+        }
+
+        .brand-chip:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        body.night-mode .brand-chip:hover {
+            background: #1e293b;
+            border-color: #475569;
+        }
+
+        .brand-chip.active {
+            background: #0ea5e9;
+            color: white;
+            border-color: #0ea5e9;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+        }
+
+        body.night-mode .brand-chip.active {
+            background: #0ea5e9;
+            border-color: #0ea5e9;
+        }
+
+        /* Night Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        body.night-mode .theme-toggle {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Table Container */
+        .table-container {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        body.night-mode .table-container {
+            background: #1e293b;
+            border-color: #334155;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 18px;
-            text-align: left;
-            table-layout: auto;
-            background-color: #fff;
         }
 
         th {
-            font-family: 'Lato', sans-serif;
-            background-color: #3498db;
+            background: #0f172a;
             color: white;
+            padding: 16px 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #1e293b;
         }
 
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+        body.night-mode th {
+            background: #0f172a;
+            border-bottom-color: #334155;
         }
 
-        th:nth-child(2), td:nth-child(2) {
-            width: 50%;
+        td {
+            padding: 16px 18px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        body.night-mode td {
+            border-bottom-color: #334155;
+            color: #e2e8f0;
+        }
+
+        tr {
+            transition: all 0.15s ease;
         }
 
         tr:hover {
-            background-color: #f5f5f5;
+            background: #f8fafc;
+        }
+
+        body.night-mode tr:hover {
+            background: #0f172a;
+        }
+
+        .model-name {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        body.night-mode .model-name {
+            color: #f1f5f9;
         }
 
         img {
-            max-width: 100px;
+            max-width: 120px;
             height: auto;
             cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
         }
 
-        /* Lightbox styles */
+        body.night-mode img {
+            border-color: #334155;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: #0ea5e9;
+        }
+
+        /* Lightbox */
         #lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.95);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-        }
-
-        #lightbox img {
-            max-width: 90%;  
-            max-height: 80%;  
-            margin: 0 auto;
-            margin-bottom: 60px;
-            transition: transform 0.3s;
+            z-index: 2000;
         }
 
         #lightbox.visible {
@@ -105,46 +337,85 @@
             visibility: visible;
         }
 
-        /* Zoom buttons */
-        .zoom-button {
-            padding: 10px 15px;
-            border: none;
-            background-color: rgba(50, 50, 50, 0.7);
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin: 5px 5px;
-            
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
         }
 
         .zoom-container {
             position: absolute;
-            bottom: 10px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
         }
 
-        /* Loading styles */
+        .zoom-button {
+            padding: 12px 20px;
+            border: none;
+            background: #0ea5e9;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zoom-button:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Loading Screen */
         #loading {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+            background: #0f172a;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .loader {
-            border: 16px solid #f3f3f3;
-            border-top: 16px solid #3498db;
-            border-radius: 50%;
             width: 50px;
             height: 50px;
-            animation: spin 1s linear infinite;
+            border: 4px solid #334155;
+            border-top: 4px solid #0ea5e9;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            color: white;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .loading-subtext {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 8px;
+            font-size: 0.95rem;
         }
 
         @keyframes spin {
@@ -152,197 +423,342 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Button Chip styles */
-        .brand-chip {
-            background-color: #ddd;
-    	    color: #333;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin: 5px 5px;
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-	    .brand-chip.active {
-            background-color: #3498db;
-            color: white;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .brand-chip:hover {
-            background-color: #2c80b9;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .night-mode {
-    background-color: #333;
-    color: #f4f4f4;
-}
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
 
-.night-mode table {
-    background-color: #444;
-    color: #f4f4f4;
-}
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
 
-.night-mode th {
-    background-color: #555;
-}
+        body.night-mode .empty-state {
+            color: #999;
+        }
 
-.night-mode tr:hover {
-    background-color: #555;
-}
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
 
-.night-mode .brand-chip {
-    background-color: #555;
-    color: #f4f4f4;
-}
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
 
-.night-mode .brand-chip.active, .night-mode .brand-chip:hover {
-    background-color: #777;
-}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
 
-.night-mode #search-input {
-    background-color: #555;
-    color: #f4f4f4;
-    border: 1px solid #777;
-}
+            td:nth-child(3), th:nth-child(3) {
+                display: none;
+            }
 
-#night-mode-toggle {
-    transition: background-color 0.3s ease;
-}
+            .controls {
+                padding: 20px;
+            }
 
-.night-mode #night-mode-toggle {
-    background-color: #555;
-    color: #f4f4f4;
-}
+            .brand-chips {
+                gap: 8px;
+            }
 
-#night-mode-toggle:hover {
-    background-color: #ddd;
-}
-
-.night-mode #night-mode-toggle:hover {
-    background-color: #666;
-}
-
-
+            .brand-chip {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-
-    <h1 style="text-align:center; padding: 10px 0; font-family: 'Lato', sans-serif; color: #3498db;">Testpoints / Pinouts Directory</h1>
-    <p id="total-models" style="text-align:center; padding: 5px 0; font-family: 'Lato', sans-serif;"></p>
-
-<div id="loading">
-    <div class="loader"></div>
-</div>
-
-
-
-<!-- Button Chips for Brand Filtering -->
-<div style="text-align:center; margin: 10px 0;">
-    <button class="brand-chip active" onclick="filterByBrand('')">All</button>
-    <button class="brand-chip" onclick="filterByBrand('Nokia')">Nokia</button>
-    <button class="brand-chip" onclick="filterByBrand('Huawei')">Huawei</button>
-    <button class="brand-chip" onclick="filterByBrand('Oppo')">Oppo</button>
-    <button class="brand-chip" onclick="filterByBrand('Vivo')">Vivo</button>
-    <button class="brand-chip" onclick="filterByBrand('Samsung')">Samsung</button>
-    <button class="brand-chip" onclick="filterByBrand('Others')">Others</button>
-</div>
-
-<div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
-    <button id="night-mode-toggle" onclick="toggleNightMode()" style="background-color: #eee; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;">🌙</button>
-</div>
-
-
-
-
-<!-- Search bar -->
-<input type="text" id="search-input" placeholder="Search by name..." oninput="filterTable()">
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Source</th>
-        </tr>
-    </thead>
-    <tbody id="table-data">
-        <!-- Data will be populated here -->
-    </tbody>
-</table>
-
-<!-- Lightbox container -->
-<div id="lightbox" onclick="hideLightbox()">
-    <img id="lightbox-img" src="">
-    <div class="zoom-container">
-        <button class="zoom-button zoom-in" onclick="zoomImage(1.1); event.stopPropagation();">
-            <i class="fas fa-search-plus"></i> Zoom In
-        </button>
-        <button class="zoom-button zoom-out" onclick="zoomImage(0.9); event.stopPropagation();">
-            <i class="fas fa-search-minus"></i> Zoom Out
-        </button>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Testpoints Directory</div>
+        <div class="loading-subtext">Fetching device data...</div>
     </div>
-</div>
 
-<script>
-    const API_BASE_URL = 'https://api.baserow.io/api/database/rows/table/';
-    const TABLE_IDS = [135384, 135385, 135386, 135387, 145432, 226286];
-    const API_TOKEN = 'R0hoE2thbSi4PWpxOUPHDFrdCmMKmU4A';
-    let currentScale = 1;
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleNightMode()" id="night-mode-toggle">
+        🌙
+    </button>
 
-    const BRAND_TO_ID = {
-        'Nokia': 135384,
-        'Huawei': 135385,
-        'Oppo': 135386,
-        'Vivo': 135387,
-        'Samsung': 145432,
-        'Others': 226286
-    };
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Testpoints / Pinouts Directory</h1>
+            <div class="stats">
+                <i class="fas fa-mobile-alt"></i>
+                <span id="total-models">Loading...</span>
+            </div>
+        </div>
 
-    function filterByBrand(brand) {
-        const tableID = BRAND_TO_ID[brand];
-        const tbody = document.getElementById("table-data");
-        const trs = tbody.getElementsByTagName("tr");
-        const chips = document.querySelectorAll('.brand-chip');
+        <!-- Controls -->
+        <div class="controls">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search by model name..." oninput="filterTable()">
+            </div>
 
-        chips.forEach(chip => chip.classList.remove('active'));
-        if (brand) {
-            document.querySelector(`.brand-chip[onclick="filterByBrand('${brand}')"]`).classList.add('active');
-        } else {
-            document.querySelector(`.brand-chip[onclick="filterByBrand('')"]`).classList.add('active');
+            <!-- Brand Filters -->
+            <label class="filter-label">Filter by Brand:</label>
+            <div class="brand-chips">
+                <button class="brand-chip active" onclick="filterByBrand('')">All Brands</button>
+                <button class="brand-chip" onclick="filterByBrand('Nokia')">Nokia</button>
+                <button class="brand-chip" onclick="filterByBrand('Huawei')">Huawei</button>
+                <button class="brand-chip" onclick="filterByBrand('Oppo')">Oppo</button>
+                <button class="brand-chip" onclick="filterByBrand('Vivo')">Vivo</button>
+                <button class="brand-chip" onclick="filterByBrand('Samsung')">Samsung</button>
+                <button class="brand-chip" onclick="filterByBrand('Others')">Others</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model Name</th>
+                        <th>Pinout Image</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody id="table-data">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="hideLightbox()">
+        <img id="lightbox-img" src="" alt="Pinout Image">
+        <div class="zoom-container">
+            <button class="zoom-button" onclick="zoomImage(1.1); event.stopPropagation();">
+                <i class="fas fa-search-plus"></i> Zoom In
+            </button>
+            <button class="zoom-button" onclick="zoomImage(0.9); event.stopPropagation();">
+                <i class="fas fa-search-minus"></i> Zoom Out
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://api.baserow.io/api/database/rows/table/';
+        const TABLE_IDS = [135384, 135385, 135386, 135387, 145432, 226286];
+        const API_TOKEN = 'R0hoE2thbSi4PWpxOUPHDFrdCmMKmU4A';
+        let currentScale = 1;
+        let allRows = [];
+
+        const BRAND_TO_ID = {
+            'Nokia': 135384,
+            'Huawei': 135385,
+            'Oppo': 135386,
+            'Vivo': 135387,
+            'Samsung': 145432,
+            'Others': 226286
+        };
+
+        function filterByBrand(brand) {
+            const tableID = BRAND_TO_ID[brand];
+            const tbody = document.getElementById("table-data");
+            const trs = tbody.getElementsByTagName("tr");
+            const chips = document.querySelectorAll('.brand-chip');
+            const searchFilter = document.getElementById("search-input").value.toLowerCase();
+
+            chips.forEach(chip => chip.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let visibleRowCount = 0;
+
+            for (let i = 0; i < trs.length; i++) {
+                if (trs[i].classList.contains('empty-state')) continue;
+                
+                const brandId = trs[i].getAttribute("data-brand-id");
+                const td = trs[i].getElementsByTagName("td")[0];
+                const modelName = td ? (td.textContent || td.innerText).toLowerCase() : "";
+                
+                const matchesBrand = brand === "" || brandId == tableID;
+                const matchesSearch = searchFilter === "" || modelName.indexOf(searchFilter) > -1;
+                
+                if (matchesBrand && matchesSearch) {
+                    trs[i].style.display = "";
+                    visibleRowCount++;
+                } else {
+                    trs[i].style.display = "none";
+                }
+            }
+
+            updateStats(visibleRowCount);
+            checkEmptyState();
         }
 
-        let visibleRowCount = 0;
+        function updateStats(count) {
+            document.getElementById('total-models').textContent = `${count} Models`;
+        }
 
-        for (let i = 0; i < trs.length; i++) {
-            const brandId = trs[i].getAttribute("data-brand-id");
-            if (brand === "" || brandId == tableID) {
-                trs[i].style.display = "";
-                visibleRowCount++;
-            } else {
-                trs[i].style.display = "none";
+        function checkEmptyState() {
+            const tbody = document.getElementById('table-data');
+            const trs = tbody.getElementsByTagName("tr");
+            let hasVisible = false;
+
+            for (let i = 0; i < trs.length; i++) {
+                if (trs[i].style.display !== "none") {
+                    hasVisible = true;
+                    break;
+                }
+            }
+
+            let emptyState = tbody.querySelector('.empty-state');
+            if (!hasVisible && !emptyState) {
+                const row = tbody.insertRow(0);
+                row.className = 'empty-state';
+                const cell = row.insertCell(0);
+                cell.colSpan = 3;
+                cell.innerHTML = `
+                    <i class="fas fa-search"></i>
+                    <h3>No Results Found</h3>
+                    <p>Try adjusting your search or filter criteria</p>
+                `;
+            } else if (hasVisible && emptyState) {
+                emptyState.remove();
             }
         }
 
-        document.getElementById('total-models').textContent = `Total Models: ${visibleRowCount}`;
-    }
-
-    const fetchPromises = TABLE_IDS.map(tableID => {
-        return fetch(`${API_BASE_URL}${tableID}/?user_field_names=true`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Token ${API_TOKEN}`,
-                'Content-Type': 'application/json'
+        async function fetchWithRetry(url, options, retries = 3) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+                }
             }
-        })
-            .then(response => response.json())
-            .then(data => data.results);
-    });
+        }
 
-    Promise.all(fetchPromises)
-        .then(allData => {
+        async function fetchAllData() {
+            const loadingText = document.querySelector('.loading-subtext');
+            const loadingTitle = document.querySelector('.loading-text');
+            let successCount = 0;
+            
+            try {
+                const results = [];
+                
+                for (let i = 0; i < TABLE_IDS.length; i++) {
+                    const tableID = TABLE_IDS[i];
+                    loadingText.textContent = `Fetching brand ${i + 1}/${TABLE_IDS.length}...`;
+                    
+                    try {
+                        const data = await fetchWithRetry(
+                            `${API_BASE_URL}${tableID}/?user_field_names=true`,
+                            {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': `Token ${API_TOKEN}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                        );
+                        results.push(data.results || []);
+                        successCount++;
+                    } catch (error) {
+                        console.error(`Failed to fetch table ${tableID}:`, error);
+                        results.push([]);
+                    }
+                }
+
+                if (successCount === 0) {
+                    throw new Error('All API requests failed');
+                }
+
+                populateTable(results);
+                
+                if (successCount < TABLE_IDS.length) {
+                    showNotification(`Loaded ${successCount}/${TABLE_IDS.length} brands successfully`, 'warning');
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                loadingTitle.textContent = 'Connection Error';
+                loadingText.innerHTML = `
+                    Unable to load data. Please check your connection.<br>
+                    <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; background: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                        <i class="fas fa-sync-alt"></i> Retry
+                    </button>
+                `;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: ${type === 'warning' ? '#ff9800' : '#4caf50'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function populateTable(allData) {
             const tbody = document.getElementById('table-data');
             let totalModels = 0;
 
@@ -353,119 +769,145 @@
 
                     const cell1 = row.insertCell(0);
                     const cell2 = row.insertCell(1);
-                    const cell3 = row.insertCell(2); // New cell for Source
+                    const cell3 = row.insertCell(2);
 
-                    cell1.textContent = item.Model;
+                    cell1.innerHTML = `<span class="model-name">${item.Model}</span>`;
 
                     const imgElement = document.createElement('img');
                     imgElement.src = item.Image;
-                    imgElement.onclick = function () {
-                        showLightbox(item.Image)
+                    imgElement.alt = item.Model;
+                    imgElement.loading = 'lazy';
+                    imgElement.setAttribute('data-fullsize', item.Image);
+                    imgElement.onclick = function (e) {
+                        showLightbox(e.target.getAttribute('data-fullsize'));
                     };
                     cell2.appendChild(imgElement);
 
-                    cell3.textContent = item.Source; // Set the content of the new cell to Source data
+                    cell3.textContent = item.Source || 'N/A';
                 });
                 totalModels += data.length;
             });
 
-            document.getElementById('total-models').textContent = `Total Models: ${totalModels}`;
-            document.getElementById('loading').style.display = 'none';
-        
-            // Apply filter based on the URL parameter
+            updateStats(totalModels);
+            
+            // Hide loading screen
+            setTimeout(() => {
+                const loading = document.getElementById('loading');
+                loading.classList.add('hide');
+                setTimeout(() => loading.style.display = 'none', 500);
+            }, 500);
+
+            // Apply URL parameter filter
             const brandParam = new URLSearchParams(window.location.search).get('brand');
-                if (brandParam) {
-                const brand = Object.keys(BRAND_TO_ID).find(key => key.toLowerCase() === brandParam.toLowerCase());
-                filterByBrand(brand);
-        }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            document.getElementById('loading').style.display = 'none';
-        });
-
-    function showLightbox(src) {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = src;
-        lightbox.classList.add('visible');
-    }
-
-    function hideLightbox() {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightbox.classList.remove('visible');
-        currentScale = 1;
-        lightboxImg.style.transform = `scale(${currentScale})`;
-    }
-
-    function zoomImage(scaleFactor) {
-        currentScale *= scaleFactor;
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.style.transform = `scale(${currentScale})`;
-    }
-
-    const lightboxImage = document.getElementById('lightbox-img');
-    lightboxImage.addEventListener('wheel', function (event) {
-        if (event.deltaY < 0) {
-            zoomImage(1.1);
-        } else {
-            zoomImage(0.9);
-        }
-        event.preventDefault();
-    }, {passive: false});
-
-    function filterTable() {
-        const input = document.getElementById("search-input");
-        const filter = input.value.toLowerCase();
-        const tbody = document.getElementById("table-data");
-        const trs = tbody.getElementsByTagName("tr");
-
-        for (let i = 0; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[0];
-            if (td) {
-                const txtValue = td.textContent || td.innerText;
-                if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                    trs[i].style.display = "";
-                } else {
-                    trs[i].style.display = "none";
+            if (brandParam) {
+                const brand = Object.keys(BRAND_TO_ID).find(key => 
+                    key.toLowerCase() === brandParam.toLowerCase()
+                );
+                if (brand) {
+                    const chip = document.querySelector(`.brand-chip[onclick*="${brand}"]`);
+                    if (chip) chip.click();
                 }
             }
         }
-    }
 
-    function toggleNightMode() {
-        const bodyElement = document.body;
-        const toggleButton = document.getElementById('night-mode-toggle');
-
-        if (bodyElement.classList.contains('night-mode')) {
-            bodyElement.classList.remove('night-mode');
-            toggleButton.innerHTML = '🌙';
-        } else {
-            bodyElement.classList.add('night-mode');
-            toggleButton.innerHTML = '🌞';
+        function showLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightbox.classList.add('visible');
+            currentScale = 1;
         }
-    }
 
-    function setThemeBasedOnSystemPreference() {
-        const bodyElement = document.body;
-        const toggleButton = document.getElementById('night-mode-toggle');
-
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // The user prefers dark theme
-            bodyElement.classList.add('night-mode');
-            toggleButton.innerHTML = '🌞';
+        function hideLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('visible');
+            currentScale = 1;
+            document.getElementById('lightbox-img').style.transform = 'scale(1)';
         }
-    }
 
-    window.onload = function () {
-        setThemeBasedOnSystemPreference();
+        function zoomImage(scaleFactor) {
+            currentScale *= scaleFactor;
+            currentScale = Math.max(0.5, Math.min(currentScale, 5));
+            document.getElementById('lightbox-img').style.transform = `scale(${currentScale})`;
+        }
 
-        
-    };
+        document.getElementById('lightbox-img').addEventListener('wheel', function (event) {
+            event.preventDefault();
+            if (event.deltaY < 0) {
+                zoomImage(1.1);
+            } else {
+                zoomImage(0.9);
+            }
+        }, {passive: false});
 
-</script>
+        function filterTable() {
+            const input = document.getElementById("search-input");
+            const filter = input.value.toLowerCase();
+            const tbody = document.getElementById("table-data");
+            const trs = tbody.getElementsByTagName("tr");
+            const activeChip = document.querySelector('.brand-chip.active');
+            const activeBrandText = activeChip ? activeChip.textContent : "All Brands";
+            const activeBrand = activeBrandText === "All Brands" ? "" : activeBrandText;
+            const activeBrandID = BRAND_TO_ID[activeBrand];
+            let visibleCount = 0;
 
+            for (let i = 0; i < trs.length; i++) {
+                if (trs[i].classList.contains('empty-state')) continue;
+                
+                const td = trs[i].getElementsByTagName("td")[0];
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    const brandId = trs[i].getAttribute("data-brand-id");
+                    
+                    const matchesSearch = filter === "" || txtValue.toLowerCase().indexOf(filter) > -1;
+                    const matchesBrand = activeBrand === "" || brandId == activeBrandID;
+                    
+                    if (matchesSearch && matchesBrand) {
+                        trs[i].style.display = "";
+                        visibleCount++;
+                    } else {
+                        trs[i].style.display = "none";
+                    }
+                }
+            }
 
+            updateStats(visibleCount);
+            checkEmptyState();
+        }
+
+        function toggleNightMode() {
+            const bodyElement = document.body;
+            const toggleButton = document.getElementById('night-mode-toggle');
+
+            if (bodyElement.classList.contains('night-mode')) {
+                bodyElement.classList.remove('night-mode');
+                toggleButton.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                bodyElement.classList.add('night-mode');
+                toggleButton.textContent = '🌞';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function setThemeBasedOnPreference() {
+            const savedTheme = localStorage.getItem('theme');
+            const bodyElement = document.body;
+            const toggleButton = document.getElementById('night-mode-toggle');
+
+            if (savedTheme === 'dark' || 
+                (!savedTheme && window.matchMedia && 
+                 window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                bodyElement.classList.add('night-mode');
+                toggleButton.textContent = '🌞';
+            }
+        }
+
+        // Initialize
+        window.onload = function () {
+            setThemeBasedOnPreference();
+            fetchAllData();
+        };
+    </script>
 </body>
 </html>
